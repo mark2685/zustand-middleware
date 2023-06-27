@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import { computed } from './index.ts';
+import { computedRules } from './computed-middleware.ts';
 
 type Store = {
   count: number;
@@ -35,7 +35,7 @@ describe('computed rules middleware simple', () => {
 
   const makeStore = () =>
     create<Store>()(
-      computed(
+      computedRules(
         (set) => ({
           count: 1,
           x: 1,
@@ -115,7 +115,7 @@ describe('computed rules with middleware', () => {
   const makeStore = () =>
     create<Store>()(
       devtools(
-        computed(
+        computedRules(
           immer((set) => ({
             count: 1,
             x: 1,
