@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest';
-import { hasUpdates } from './has-updates.ts';
+import { hasUpdates } from './has-updates';
 
 describe('hasUpdates', () => {
-  const trackedSelectors = new Set(['tracked_1', 'tracked_2']);
-
-  it('returns true if updated state includes keys from tracked selectors', () => {
+  it('returns false if updated state does not have updated values', () => {
+    const state = { tracked_1: 'foo', tracked_2: 'bar' };
     const updatedState = { tracked_1: 'foo' };
 
-    expect(hasUpdates(updatedState, trackedSelectors)).toBe(true);
+    expect(hasUpdates(state, updatedState)).toBe(false);
   });
 
-  it('returns false if updated state does not include keys from tracked selectors', () => {
-    const updatedState = { foo: 'bar' };
+  it('returns true if updated state does have updated values', () => {
+    const state = { tracked_1: 'foo', tracked_2: 'bar' };
+    const updatedState = { tracked_1: 'baz' };
 
-    expect(hasUpdates(updatedState, trackedSelectors)).toBe(false);
+    expect(hasUpdates(state, updatedState)).toBe(true);
   });
 });

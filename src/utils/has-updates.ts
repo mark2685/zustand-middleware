@@ -1,9 +1,17 @@
+import isEqual from 'lodash.isequal';
+
 /**
- * Returns true if updated state includes keys from tracked selectors.
+ * Returns true if updated state differes from original state.
  */
-export const hasUpdates = <T extends object>(
-  updatedState: Partial<T>,
-  selectors: Set<string | symbol>,
+export const hasUpdates = <TState extends object>(
+  state: TState,
+  updatedState: Partial<TState>,
 ): boolean => {
-  return Object.keys(updatedState).some((k) => selectors.has(k));
+  for (const key in updatedState) {
+    if (!isEqual(state[key], updatedState[key])) {
+      return true;
+    }
+  }
+
+  return false;
 };

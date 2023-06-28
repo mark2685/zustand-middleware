@@ -38,7 +38,6 @@
     "prefer-const": "error",
     "curly": ["warn", "multi-line", "consistent"],
     "no-console": "off",
-    "import/extensions": ["error", "always"],
     "import/no-unresolved": ["error", { "commonjs": true, "amd": true }],
     "import/export": "error",
     "@typescript-eslint/no-duplicate-imports": ["error"],
@@ -89,27 +88,16 @@
       }
     ]
   },
-  "overrides": [
-    {
-      "files": ["src/**/*.test.ts", "src/**/*.test.tsx"],
-      "rules": {
-        "import/extensions": ["error", "never"]
-      }
-    },
-    {
-      "files": ["./*.js"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": "off"
-      }
-    }
-  ],
+  "overrides": [],
   "settings": {
     "react": {
       "version": "detect"
     },
-    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     "import/parsers": {
-      "@typescript-eslint/parser": [".js", ".jsx", ".ts", ".tsx"]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {}
     }
   }
 }

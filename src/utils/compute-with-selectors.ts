@@ -1,12 +1,18 @@
+import { ComputeRules, RulesState } from '@/types';
+
 /**
- * Initial compute that determines selectors used to determine whether futures
- * state updates need to be calculated.
+ * Utilizes Proxy during initial compute to create tracked selectors used to
+ * determine whether future state updates need to be re-computed.
  */
-export const computeWithSelectors = <T extends object, U extends object>(
-  state: T,
-  computeFn: (state: T) => U,
+export const computeWithSelectors = <
+  TState extends object,
+  UState extends object,
+>(
+  state: TState,
+  ruleEngineRoots: ComputeRules<UState>,
+  computeFn: (roots: ComputeRules<UState>, state: TState) => RulesState<UState>,
   trackedSelectors: Set<string | symbol>,
-): U => {
+): Record<keyof UState, boolean> => {
   const proxyState = new Proxy(
     { ...state },
     {
@@ -18,5 +24,5 @@ export const computeWithSelectors = <T extends object, U extends object>(
     },
   );
 
-  return computeFn(proxyState);
+  return computeFn(ruleEngineRoots, proxyState);
 };
